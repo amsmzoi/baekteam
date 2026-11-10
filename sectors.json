@@ -1,0 +1,134 @@
+{
+  "list_date": "2026-11-10",
+  "source": "백팀/README.md, 백팀/*/기업목록.md",
+  "sectors": [
+    {
+      "id": "01", "name": "전통에너지",
+      "benchmarks": [{"ticker": "XLE", "name": "XLE 에너지 ETF"}],
+      "companies": [
+        {"ticker": "XOM", "name": "엑슨모빌", "benchmark": "XLE"},
+        {"ticker": "CVX", "name": "셰브론", "benchmark": "XLE"},
+        {"ticker": "OXY", "name": "옥시덴탈", "benchmark": "XLE"},
+        {"ticker": "COP", "name": "코노코필립스", "benchmark": "XLE"},
+        {"ticker": "KMI", "name": "킨더모건", "benchmark": "XLE"},
+        {"ticker": "WMB", "name": "윌리엄스", "benchmark": "XLE"}
+      ]
+    },
+    {
+      "id": "02", "name": "미래에너지",
+      "benchmarks": [{"ticker": "ICLN", "name": "ICLN 클린에너지 ETF"}, {"ticker": "URA", "name": "URA 우라늄 ETF"}],
+      "companies": [
+        {"ticker": "CEG", "name": "컨스텔레이션", "benchmark": "ICLN"},
+        {"ticker": "VST", "name": "비스트라", "benchmark": "ICLN"},
+        {"ticker": "NEE", "name": "넥스트에라", "benchmark": "ICLN"},
+        {"ticker": "CCJ", "name": "카메코", "benchmark": "URA"},
+        {"ticker": "GEV", "name": "GE 버노바", "benchmark": "ICLN"},
+        {"ticker": "FSLR", "name": "퍼스트 솔라", "benchmark": "ICLN"},
+        {"ticker": "WM", "name": "웨이스트 매니지먼트", "benchmark": "ICLN"},
+        {"ticker": "BRK-B", "name": "버크셔", "benchmark": "ICLN"}
+      ]
+    },
+    {
+      "id": "03", "name": "데이터인프라",
+      "benchmarks": [{"ticker": "QQQ", "name": "QQQ 나스닥100 ETF"}],
+      "companies": [
+        {"ticker": "AAPL", "name": "애플", "benchmark": "QQQ"},
+        {"ticker": "GOOGL", "name": "알파벳", "benchmark": "QQQ"},
+        {"ticker": "META", "name": "메타", "benchmark": "QQQ"},
+        {"ticker": "MSFT", "name": "마이크로소프트", "benchmark": "QQQ"},
+        {"ticker": "VRSN", "name": "베리사인", "benchmark": "QQQ"},
+        {"ticker": "EQIX", "name": "에퀴닉스", "benchmark": "QQQ"},
+        {"ticker": "DLR", "name": "디지털 리얼티", "benchmark": "QQQ"},
+        {"ticker": "AMZN", "name": "아마존", "benchmark": "QQQ"},
+        {"ticker": "WMT", "name": "월마트", "benchmark": "QQQ"},
+        {"ticker": "BX", "name": "블랙스톤", "benchmark": "QQQ"},
+        {"ticker": "ECL", "name": "에코랩", "benchmark": "QQQ"}
+      ]
+    },
+    {
+      "id": "04", "name": "필수소비재",
+      "benchmarks": [{"ticker": "XLP", "name": "XLP 필수소비재 ETF"}],
+      "companies": [
+        {"ticker": "KO", "name": "코카콜라", "benchmark": "XLP"},
+        {"ticker": "KHC", "name": "크래프트하인즈", "benchmark": "XLP"},
+        {"ticker": "KR", "name": "크로거", "benchmark": "XLP"},
+        {"ticker": "AMZN", "name": "아마존", "benchmark": "XLP"},
+        {"ticker": "COST", "name": "코스트코", "benchmark": "XLP"},
+        {"ticker": "WMT", "name": "월마트", "benchmark": "XLP"},
+        {"ticker": "PG", "name": "P&G", "benchmark": "XLP"},
+        {"ticker": "PEP", "name": "펩시코", "benchmark": "XLP"},
+        {"ticker": "MDLZ", "name": "몬덜리즈", "benchmark": "XLP"},
+        {"ticker": "CL", "name": "콜게이트", "benchmark": "XLP"},
+        {"ticker": "MO", "name": "알트리아", "benchmark": "XLP"},
+        {"ticker": "PM", "name": "필립모리스", "benchmark": "XLP"},
+        {"ticker": "UL", "name": "유니레버", "benchmark": "XLP"}
+      ]
+    },
+    {
+      "id": "05", "name": "결제",
+      "benchmarks": [{"ticker": "IPAY", "name": "IPAY 결제 ETF"}],
+      "companies": [
+        {"ticker": "V", "name": "비자", "benchmark": "IPAY"},
+        {"ticker": "MA", "name": "마스터카드", "benchmark": "IPAY"},
+        {"ticker": "AXP", "name": "아메리칸익스프레스", "benchmark": "IPAY"},
+        {"ticker": "FISV", "name": "파이서브", "benchmark": "IPAY"},
+        {"ticker": "PYPL", "name": "페이팔", "benchmark": "IPAY"},
+        {"ticker": "XYZ", "name": "블록", "benchmark": "IPAY"},
+        {"ticker": "PAYO", "name": "페이오니아", "benchmark": "IPAY"},
+        {"ticker": "AAPL", "name": "애플", "benchmark": "IPAY"}
+      ]
+    },
+    {
+      "id": "06", "name": "금융·자산운용",
+      "benchmarks": [{"ticker": "XLF", "name": "XLF 금융 ETF"}],
+      "companies": [
+        {"ticker": "BRK-B", "name": "버크셔", "benchmark": "XLF"},
+        {"ticker": "BLK", "name": "블랙록", "benchmark": "XLF"},
+        {"ticker": "STT", "name": "스테이트 스트리트", "benchmark": "XLF"},
+        {"ticker": "BX", "name": "블랙스톤", "benchmark": "XLF"},
+        {"ticker": "JPM", "name": "JP모건", "benchmark": "XLF"},
+        {"ticker": "BAC", "name": "뱅크오브아메리카", "benchmark": "XLF"},
+        {"ticker": "GS", "name": "골드만삭스", "benchmark": "XLF"},
+        {"ticker": "MS", "name": "모건스탠리", "benchmark": "XLF"},
+        {"ticker": "MCO", "name": "무디스", "benchmark": "XLF"}
+      ]
+    },
+    {
+      "id": "07", "name": "명품",
+      "benchmarks": [{"ticker": "MC.PA", "name": "LVMH"}],
+      "companies": [
+        {"ticker": "RMS.PA", "name": "에르메스", "benchmark": "MC.PA"},
+        {"ticker": "CFR.SW", "name": "리치몬트", "benchmark": "MC.PA"},
+        {"ticker": "KER.PA", "name": "케링", "benchmark": "MC.PA"},
+        {"ticker": "1913.HK", "name": "프라다", "benchmark": "MC.PA"},
+        {"ticker": "BRBY.L", "name": "버버리", "benchmark": "MC.PA"},
+        {"ticker": "RACE", "name": "페라리", "benchmark": "MC.PA"},
+        {"ticker": "RL", "name": "랄프로렌", "benchmark": "MC.PA"},
+        {"ticker": "TPR", "name": "태피스트리", "benchmark": "MC.PA"},
+        {"ticker": "CPRI", "name": "카프리", "benchmark": "MC.PA"},
+        {"ticker": "EL", "name": "에스티로더", "benchmark": "MC.PA"},
+        {"ticker": "DEO", "name": "디아지오", "benchmark": "MC.PA"},
+        {"ticker": "RCO.PA", "name": "레미 쿠앵트로", "benchmark": "MC.PA"},
+        {"ticker": "MAR", "name": "메리어트", "benchmark": "MC.PA"}
+      ]
+    },
+    {
+      "id": "08", "name": "물과식량",
+      "benchmarks": [{"ticker": "PHO", "name": "PHO 물 ETF"}, {"ticker": "MOO", "name": "MOO 농업 ETF"}],
+      "companies": [
+        {"ticker": "AWK", "name": "아메리칸 워터", "benchmark": "PHO"},
+        {"ticker": "ECL", "name": "에코랩", "benchmark": "PHO"},
+        {"ticker": "XYL", "name": "자일럼", "benchmark": "PHO"},
+        {"ticker": "VLTO", "name": "베랄토", "benchmark": "PHO"},
+        {"ticker": "WTS", "name": "와츠 워터", "benchmark": "PHO"},
+        {"ticker": "PNR", "name": "펜테어", "benchmark": "PHO"},
+        {"ticker": "DE", "name": "디어", "benchmark": "MOO"},
+        {"ticker": "NTR", "name": "뉴트리엔", "benchmark": "MOO"},
+        {"ticker": "CTVA", "name": "코르테바", "benchmark": "MOO"},
+        {"ticker": "ADM", "name": "ADM", "benchmark": "MOO"},
+        {"ticker": "WM", "name": "웨이스트 매니지먼트", "benchmark": "PHO"},
+        {"ticker": "RSG", "name": "리퍼블릭 서비스", "benchmark": "PHO"}
+      ]
+    }
+  ]
+}

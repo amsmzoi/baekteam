@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>백팀 주가 흐름</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="wrap">
+  <header class="head">
+    <h1>백팀 주가 흐름</h1>
+    <p class="updated" id="updated">데이터를 불러오는 중…</p>
+  </header>
+
+  <p class="summary" id="summary"></p>
+
+  <section class="controls" aria-label="보기 선택">
+    <div class="seg" id="periods" role="group" aria-label="기간"></div>
+    <div class="chips" id="sectors" role="group" aria-label="섹터"></div>
+  </section>
+
+  <section class="card">
+    <h2 class="card-title" id="chartTitle"></h2>
+    <p class="missing" id="missing" hidden></p>
+    <div class="chart" id="chart">
+      <svg id="svg" role="img" aria-label="주가 변화율 차트"></svg>
+      <div class="tip" id="tip" hidden></div>
+    </div>
+    <p class="note" id="note"></p>
+    <ul class="legend" id="legend"></ul>
+    <p class="hint">선이나 범례를 누르면 그 회사만 진하게 보여요. 한 번 더 누르면 원래대로.</p>
+  </section>
+
+  <section class="tables">
+    <div class="card">
+      <h2 class="card-title">이 섹터 회사: 기준과 얼마나 달랐나</h2>
+      <div class="tscroll"><table id="tSector"></table></div>
+    </div>
+    <div class="card">
+      <h2 class="card-title">섹터를 통틀어 가장 다르게 움직인 10곳</h2>
+      <div class="tscroll"><table id="tTop"></table></div>
+    </div>
+  </section>
+
+  <details class="card about">
+    <summary>숫자 읽는 법과 한계</summary>
+    <div id="about"></div>
+  </details>
+
+  <footer class="foot">흐름을 보는 도구예요. 매수·매도 추천이 아닙니다.</footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

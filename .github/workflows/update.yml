@@ -1,0 +1,55 @@
+# 매일 주가를 새로 받고 사이트를 다시 띄우는 자동 작업
+# - 매일 한국 시간 07:30 (= 전날 22:30 UTC)에 돈다. GitHub 사정으로 몇 분~수십 분 늦게 돌 수 있다.
+# - Actions 탭에서 "Run workflow" 버튼으로 바로 돌릴 수도 있다.
+name: 주가 업데이트
+
+on:
+  schedule:
+    - cron: "30 22 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 주가 받기
+        if: github.event_name != 'push'
+        run: python fetch_prices.py
+
+      - name: 받은 데이터 저장 (커밋)
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "주가 업데이트 $(TZ=Asia/Seoul date +%Y-%m-%d)"
+          git push
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
