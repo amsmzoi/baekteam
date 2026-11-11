@@ -163,3 +163,19 @@ body { overflow-x: hidden; }
 .dlg-btns .primary { background: var(--ink); color: var(--surface); border-color: var(--ink); font-weight: 600; }
 .upd-dlg .sm { font-size: 12.5px; }
 .upd-dlg a { color: var(--accent); }
+
+/* 범례: 기준은 맨 위 한 줄, 회사는 위→아래로 순위대로 (여러 칸이면 첫 칸을 다 읽고 다음 칸) */
+.legend { display: block; column-count: 1; column-gap: 18px; }
+.legend li { break-inside: avoid; }
+.legend-bench { column-count: 1; margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid var(--grid); }
+.legend-bench li { display: inline-block; min-width: 260px; margin-right: 12px; }
+.legend li button { grid-template-columns: auto 28px 1fr auto; }
+.legend-bench li button { grid-template-columns: 28px 1fr auto; }
+.legend .rk { min-width: 1.4em; text-align: right; color: var(--ink-3); font-size: 12px; font-variant-numeric: tabular-nums; }
+@media (min-width: 720px) { .legend { column-count: 2; } .legend-bench { column-count: 1; } }
+@media (min-width: 1040px) { .legend { column-count: 3; } .legend-bench { column-count: 1; } }
+
+/* 표 열 이름을 눌러 정렬 */
+th button.sort { border: 0; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: inherit; }
+th button.sort:hover { color: var(--ink); text-decoration: underline; }
+th button.sort.on { color: var(--ink); font-weight: 650; }

@@ -39,7 +39,7 @@
 1. GitHub 로그인 → https://github.com/settings/personal-access-tokens/new 열기
 2. **Token name**: `백팀 업데이트 버튼` / **Expiration**: 원하는 기간 (끝나면 새로 만들어 넣으면 돼요)
 3. **Repository access**: **Only select repositories** → `baekteam` 선택
-4. **Permissions** → **Repository permissions** → **Actions**를 **Read and write**로 (다른 건 그대로)
+4. **Permissions** 상자 → **Repositories** 탭에서 **+ Add permissions** → 검색에 `Actions` → 그냥 **Actions** 선택 → 생긴 줄 오른쪽을 **Read and write**로 (저절로 생기는 Metadata: Read-only는 그대로)
 5. 맨 아래 **Generate token** → `github_pat_`로 시작하는 글자를 복사 (이 화면을 벗어나면 다시 못 봐요)
 6. 사이트에서 **오늘자 업데이트** → 토큰 칸에 붙여 넣기 → **저장하고 업데이트**
 
@@ -136,3 +136,4 @@ GitHub에 올린 상태라면 "맞춘 뒤 GitHub에도 올려 줘"까지 말하�
 - 고른 기간보다 늦게 상장·분리된 회사(GE 버노바 2024년, 베랄토 2023년)는 첫 거래일을 0%로 놓고, 기준도 그날부터 다시 계산해 비교해요.
 - 두 섹터에 나오는 회사(아마존, 애플, 월마트, 블랙스톤, 에코랩, 버크셔, 웨이스트 매니지먼트)는 섹터마다 비교하는 기준이 달라서 기준 대비 값도 달라요.
 - 7일은 일별 종가 5~6개로 그려요.
+- 범례와 두 표는 기본으로 **기간 변화율 높은 순**이에요. 범례는 위→아래, 그다음 옆 칸 순서로 읽어요(번호가 순위). 표는 열 이름(기준 대비, 마지막 하루 등)을 누르면 그 열로 다시 정렬되고, 한 번 더 누르면 반대 순서예요. 오늘 많이 오른 회사를 보려면 **마지막 하루**를 누르세요.

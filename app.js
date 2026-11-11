@@ -147,7 +147,7 @@
     for (var v = lo; v <= hi + 1e-9; v += step) {
       var y = Y(v).toFixed(1), zero = Math.abs(v) < 1e-9;
       if (!zero) out.push('<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + y + '" y2="' + y + '" style="stroke:var(--grid);stroke-width:1"/>');
-      out.push('<text x="' + (m.l - 6) + '" y="' + y + '" dy="0.32em" text-anchor="end">' + (v > 0 ? "+" : "") + Math.round(v) + "%</text>");
+      out.push('<text x="' + (m.l - 6) + '" y="' + y + '" dy="0.32em" text-anchor="end">' + (v > 0 ? "+" : "") + (Math.round(v * 10) / 10) + "%</text>");
     }
     // 세로 눈금: 첫 기준의 날짜 중 고르게
     var ref = series[0] ? series[0].sl.dates : [];
@@ -256,7 +256,7 @@
       else if (k.indexOf("b:") !== 0) p.style.strokeWidth = 1.6;
       if (k === f) p.parentNode.appendChild(p); // 맨 위로
     });
-    document.querySelectorAll("#legend li").forEach(function (li) {
+    document.querySelectorAll("#legend li, #legendBench li").forEach(function (li) {
       var k = li.getAttribute("data-k");
       li.classList.toggle("on", !!f && k === f);
       li.classList.toggle("dim", !!f && !keep[k]);
@@ -285,34 +285,64 @@
     if (failed) t += " (받지 못한 " + failed + "곳 제외)";
     $("note").innerHTML = t;
 
-    var items = [];
+    // 기준은 맨 위 한 줄, 회사는 변화율 높은 순(위→아래, 그다음 옆 칸)으로 순위 번호를 붙인다
+    var bItems = [], items = [];
     view.benches.forEach(function (b) {
       if (!b.sl) return;
-      items.push('<li class="bench" data-k="b:' + esc(b.ticker) + '"><button type="button">' + swatch(styleOf("bench", b.idx)) +
+      bItems.push('<li class="bench" data-k="b:' + esc(b.ticker) + '"><button type="button">' + swatch(styleOf("bench", b.idx)) +
         '<span class="nm">' + esc(b.name) + '<span class="tk">' + esc(b.ticker) + '</span><span class="tag">기준</span></span><span class="val">' + pct(b.sl.chg) + "</span></button></li>");
     });
-    view.comps.filter(function (c) { return c.sl; }).sort(function (a, b) { return b.chg - a.chg; }).forEach(function (c) {
+    view.comps.filter(function (c) { return c.sl; }).sort(function (a, b) { return b.chg - a.chg; }).forEach(function (c, i) {
       var extra = "";
       if (view.benches.length > 1 && c.bench !== view.benches[0].ticker) extra += '<span class="tag">비교: ' + esc(c.bench) + "</span>";
       if (c.sl.late) extra += '<span class="tag">상장 후부터</span>';
-      items.push('<li data-k="' + esc(c.ticker) + '"><button type="button">' + swatch(styleOf("comp", c.idx)) +
+      items.push('<li data-k="' + esc(c.ticker) + '"><button type="button"><span class="rk">' + (i + 1) + "</span>" + swatch(styleOf("comp", c.idx)) +
         '<span class="nm">' + esc(c.name) + '<span class="tk">' + esc(c.ticker) + "</span>" + extra + tag(c.diff) + '</span><span class="val">' + pct(c.chg) + "</span></button></li>");
     });
+    $("legendBench").innerHTML = bItems.join("");
     $("legend").innerHTML = items.join("");
+  }
+
+  // 표 정렬: 기본은 기간 변화율 높은 순. 열 이름을 누르면 그 열로 정렬(다시 누르면 반대로).
+  var SORT = { tSector: { key: "chg", dir: -1 }, tTop: { key: "chg", dir: -1 } };
+  var SORTVAL = {
+    name: function (c) { return c.name; },
+    sector: function (c) { return c.sector.id; },
+    chg: function (c) { return c.chg; },
+    diff: function (c) { return c.diff; },
+    day: function (c) { return c.sl.day == null ? -Infinity : c.sl.day; }
+  };
+  function sortRows(rows, id) {
+    var s = SORT[id], f = SORTVAL[s.key];
+    return rows.slice().sort(function (a, b) {
+      var x = f(a), y = f(b);
+      var c = typeof x === "string" ? x.localeCompare(y, "ko") : x - y;   // 오름차순 비교
+      return s.dir * c || b.chg - a.chg;                                   // dir -1 = 큰 값 먼저
+    });
+  }
+  function head(id, cols) {
+    var s = SORT[id];
+    return "<thead><tr>" + cols.map(function (c) {
+      var on = s.key === c[0], arrow = on ? (s.dir < 0 ? " ▼" : " ▲") : "";
+      return '<th aria-sort="' + (on ? (s.dir < 0 ? "descending" : "ascending") : "none") + '"><button type="button" class="sort' + (on ? " on" : "") +
+        '" data-t="' + id + '" data-key="' + c[0] + '">' + c[1] + arrow + "</button></th>";
+    }).join("") + "</tr></thead>";
   }
 
   function cls(x) { return x == null ? "" : x > GAP ? "good" : x < -GAP ? "bad" : ""; }
 
   function renderTables(view, all) {
-    var rows = view.comps.filter(function (c) { return c.diff != null; }).sort(function (a, b) { return b.diff - a.diff; });
-    $("tSector").innerHTML = "<thead><tr><th>회사</th><th>기간 변화율</th><th>기준 대비</th><th>마지막 하루</th></tr></thead><tbody>" +
+    var rows = sortRows(view.comps.filter(function (c) { return c.diff != null; }), "tSector");
+    $("tSector").innerHTML = head("tSector", [["name", "회사"], ["chg", "기간 변화율"], ["diff", "기준 대비"], ["day", "마지막 하루"]]) + "<tbody>" +
       rows.map(function (c) {
         return "<tr><td>" + esc(c.name) + '<span class="tk">' + esc(c.ticker) + (c.sl.late ? " · 상장 후부터" : "") + "</span></td><td>" + pct(c.chg) +
           '</td><td class="' + cls(c.diff) + '">' + pp(c.diff) + "</td><td>" + pct(c.sl.day) + "</td></tr>";
       }).join("") + "</tbody>";
 
+    // 고르는 기준은 그대로(기준과 차이가 큰 10곳), 보여 주는 순서만 정렬
     var top = all.filter(function (c) { return c.diff != null; }).sort(function (a, b) { return Math.abs(b.diff) - Math.abs(a.diff); }).slice(0, 10);
-    $("tTop").innerHTML = "<thead><tr><th>회사</th><th>섹터</th><th>기간 변화율</th><th>기준 대비</th></tr></thead><tbody>" +
+    top = sortRows(top, "tTop");
+    $("tTop").innerHTML = head("tTop", [["name", "회사"], ["sector", "섹터"], ["chg", "기간 변화율"], ["diff", "기준 대비"]]) + "<tbody>" +
       top.map(function (c) {
         return "<tr><td>" + esc(c.name) + '<span class="tk">' + esc(c.ticker) + '</span></td><td class="sec">' + c.sector.id + " " + esc(c.sector.name) +
           "</td><td>" + pct(c.chg) + '</td><td class="' + cls(c.diff) + '">' + pp(c.diff) + "</td></tr>";
@@ -398,8 +428,17 @@
       var b = e.target.closest("button"); if (!b) return;
       state.sector = b.getAttribute("data-s"); state.focus = null; render();
     });
-    $("legend").addEventListener("click", function (e) {
-      var li = e.target.closest("li"); if (li) toggleFocus(li.getAttribute("data-k"));
+    ["legend", "legendBench"].forEach(function (id) {
+      $(id).addEventListener("click", function (e) {
+        var li = e.target.closest("li"); if (li) toggleFocus(li.getAttribute("data-k"));
+      });
+    });
+    document.querySelector(".tables").addEventListener("click", function (e) {
+      var b = e.target.closest("button.sort"); if (!b) return;
+      var s = SORT[b.getAttribute("data-t")], k = b.getAttribute("data-key");
+      if (s.key === k) s.dir = -s.dir;
+      else { s.key = k; s.dir = (k === "name" || k === "sector") ? 1 : -1; }
+      render();
     });
     var box = $("chart");
     function pos(e) { var r = $("svg").getBoundingClientRect(); return [(e.clientX - r.left) * (chartCtx.W / r.width), (e.clientY - r.top) * (chartCtx.H / r.height)]; }
