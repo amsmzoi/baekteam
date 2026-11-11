@@ -10,9 +10,28 @@
 <body>
 <main class="wrap">
   <header class="head">
-    <h1>백팀 주가 흐름</h1>
+    <div class="head-row">
+      <h1>백팀 주가 흐름</h1>
+      <button type="button" class="upd-btn" id="updBtn">오늘자 업데이트</button>
+    </div>
     <p class="updated" id="updated">데이터를 불러오는 중…</p>
+    <p class="upd-status" id="updStatus" hidden></p>
   </header>
+
+  <dialog class="upd-dlg" id="updDlg">
+    <form method="dialog">
+      <h2>오늘자 업데이트</h2>
+      <p>버튼 한 번으로 업데이트하려면 이 기기에 <b>GitHub 토큰</b>을 한 번 넣어 두세요. 토큰은 이 브라우저에만 저장되고 사이트 파일에는 들어가지 않아요.</p>
+      <label for="tokIn">토큰 (github_pat_로 시작)</label>
+      <input id="tokIn" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+      <div class="dlg-btns">
+        <button type="button" id="tokSave" class="primary">저장하고 업데이트</button>
+        <button value="cancel">닫기</button>
+      </div>
+      <p class="sm">토큰 없이 하려면: <a id="runLink" target="_blank" rel="noopener">GitHub에서 직접 실행</a> → <b>Run workflow</b> 버튼 (GitHub 로그인 필요)</p>
+      <p class="sm" id="tokForget" hidden><a href="#" id="tokClear">이 기기에 저장된 토큰 지우기</a></p>
+    </form>
+  </dialog>
 
   <p class="summary" id="summary"></p>
 
@@ -52,5 +71,6 @@
   <footer class="foot">흐름을 보는 도구예요. 매수·매도 추천이 아닙니다.</footer>
 </main>
 <script src="app.js"></script>
+<script src="update.js"></script>
 </body>
 </html>

@@ -5,7 +5,8 @@ name: 주가 업데이트
 
 on:
   schedule:
-    - cron: "30 22 * * *"
+    - cron: "30 22 * * *"   # 한국 07:30
+    - cron: "15 0 * * *"    # 한국 09:15 (07:30 실행을 GitHub가 건너뛸 때 대비)
   workflow_dispatch:
   push:
     branches: [main]

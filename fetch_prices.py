@@ -78,6 +78,10 @@ def download(ticker):
     raise RuntimeError(last_err or "알 수 없는 오류")
 
 
+def _day(ts, offset):
+    return datetime.fromtimestamp(ts + offset, tz=timezone.utc).strftime("%Y-%m-%d")
+
+
 def parse(raw):
     """원본 JSON → (meta 요약, 날짜 목록, 종가 목록). 마감 안 된 오늘 값은 뺀다."""
     chart = raw.get("chart") or {}
@@ -98,6 +102,15 @@ def parse(raw):
     start, end = regular.get("start"), regular.get("end")
     if start and end and start <= now < end and stamps and stamps[-1] >= start:
         stamps, closes = stamps[:-1], closes[:-1]
+
+    # 장이 끝났는데 마지막 날 종가 칸이 비어 있으면(야후가 늦게 채우는 경우),
+    # 같은 날 마감 시각에 기록된 공식 마감가(regularMarketPrice)로 채운다.
+    rm_price, rm_time = meta.get("regularMarketPrice"), meta.get("regularMarketTime")
+    market_open = bool(start and end and start <= now < end)
+    if (stamps and closes and closes[-1] is None and rm_price and rm_time
+            and not market_open and rm_time >= stamps[-1]
+            and _day(rm_time, offset) == _day(stamps[-1], offset)):
+        closes = list(closes[:-1]) + [rm_price]
 
     by_date = {}
     for ts, c in zip(stamps, closes):
